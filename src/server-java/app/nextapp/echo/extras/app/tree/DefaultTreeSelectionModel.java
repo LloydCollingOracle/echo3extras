@@ -224,7 +224,7 @@ public class DefaultTreeSelectionModel implements TreeSelectionModel {
         boolean wasEmpty = isSelectionEmpty();
         paths.clear();
         addSelectionPath(path);
-        if (!wasEmpty && isSelectionEmpty()) {
+        if (!wasEmpty || !isSelectionEmpty()) {
             fireValueChanged();
         }
     }
@@ -236,7 +236,7 @@ public class DefaultTreeSelectionModel implements TreeSelectionModel {
         boolean wasEmpty = isSelectionEmpty();
         this.paths.clear();
         addSelectionPaths(paths);
-        if (!wasEmpty && isSelectionEmpty()) {
+        if (!wasEmpty || !isSelectionEmpty()) {
             fireValueChanged();
         }
     }
