@@ -87,7 +87,7 @@ public class ColorSelectTest extends AbstractTest {
                 windowPane.setStyleName("Default");
                 windowPane.setInsets(new Insets(10, 5));
                 windowPane.add(new ColorSelect(StyleUtil.randomColor()));
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                getContainingWindow().getContent().add(windowPane);
             }
         });
 
@@ -114,7 +114,7 @@ public class ColorSelectTest extends AbstractTest {
                 column.add(new Label("Verify ColorSelect properly tracks mouse click coordinates."));
                 column.add(new Label("Verify ColorSelect properly tracks mouse click coordinates."));
                 
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                getContainingWindow().getContent().add(windowPane);
             }
         });
 

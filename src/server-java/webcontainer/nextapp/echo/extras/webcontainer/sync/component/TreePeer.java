@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Set;
 
 import nextapp.echo.app.Component;
+import nextapp.echo.app.Window;
 import nextapp.echo.app.serial.SerialException;
 import nextapp.echo.app.serial.SerialPropertyPeer;
 import nextapp.echo.app.update.ClientUpdateManager;
@@ -311,11 +312,11 @@ extends AbstractComponentSynchronizePeer {
             Tree tree = ((TreeStructure) propertyValue).tree;
             TreeStructureRenderer renderer = new TreeStructureRenderer(propertyElement, tree);
             propertyElement.setAttribute("t", SerialPropertyPeerConstants.PROPERTY_TYPE_PREFIX + "TreeStructure");
-            UserInstance userInstance = (UserInstance) context.get(UserInstance.class);
-            TreeRenderState renderState = (TreeRenderState) userInstance.getRenderState(tree);
+            Window containingWindow = tree.getContainingWindow();
+            TreeRenderState renderState = (TreeRenderState) containingWindow.getRenderState(tree);
             if (renderState == null) {
                 renderState = new TreeRenderState(tree);
-                userInstance.setRenderState(tree, renderState);
+                containingWindow.setRenderState(tree, renderState);
             }
             renderer.render(context, renderState);
             renderState.clearChangedPaths();
@@ -445,7 +446,7 @@ extends AbstractComponentSynchronizePeer {
      */
     private static String getSelectionString(Context context, TreeSelectionModel selectionModel, Tree tree) {
         UserInstance userInstance = (UserInstance) context.get(UserInstance.class);
-        TreeRenderState renderState = (TreeRenderState) userInstance.getRenderState(tree);
+        TreeRenderState renderState = (TreeRenderState) tree.getContainingWindow().getRenderState(tree);
         
         StringBuffer selection = new StringBuffer();
         TreePath[] paths = selectionModel.getSelectionPaths();
@@ -615,8 +616,9 @@ extends AbstractComponentSynchronizePeer {
         Iterator normalPropertyIterator = super.getUpdatedOutputPropertyNames(context, component, update);
         HashSet extraProperties = new HashSet();
         
+        Tree tree = (Tree) update.getParent();
         if (update.hasRemovedChildren() || update.hasRemovedDescendants()) {
-            userInstance.removeRenderState(component);
+        	tree.getContainingWindow().removeRenderState(component);
             extraProperties.add(PROPERTY_TREE_STRUCTURE);
             extraProperties.add(Tree.SELECTION_CHANGED_PROPERTY);
         }
@@ -625,7 +627,7 @@ extends AbstractComponentSynchronizePeer {
             extraProperties.addAll(Arrays.asList(MODEL_CHANGED_UPDATE_PROPERTIES));
         } 
         if (update.hasUpdatedProperty(Tree.EXPANSION_STATE_CHANGED_PROPERTY)) {
-            TreeRenderState renderState = (TreeRenderState) userInstance.getRenderState(component);
+            TreeRenderState renderState = (TreeRenderState) tree.getContainingWindow().getRenderState(component);
             if (renderState == null || renderState.hasChangedPaths()) {
                 extraProperties.add(PROPERTY_TREE_STRUCTURE);
             }
@@ -646,10 +648,10 @@ extends AbstractComponentSynchronizePeer {
         if (EXPANSION_PROPERTY.equals(propertyName)) {
             int row = ((Integer)newValue).intValue();
             UserInstance userInstance = (UserInstance) context.get(UserInstance.class);
-            TreeRenderState renderState = (TreeRenderState) userInstance.getRenderState(component);
+            TreeRenderState renderState = (TreeRenderState) tree.getContainingWindow().getRenderState(component);
             if (renderState == null) {
                 renderState = new TreeRenderState(tree);
-                userInstance.setRenderState(component, renderState);
+                tree.getContainingWindow().setRenderState(component, renderState);
             }
             TreePath path = tree.getPathForRow(row);
             renderState.setClientPath(path);

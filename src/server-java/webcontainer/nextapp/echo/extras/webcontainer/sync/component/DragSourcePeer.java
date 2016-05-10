@@ -104,7 +104,7 @@ public class DragSourcePeer extends AbstractComponentSynchronizePeer {
             DragSource dragSource = (DragSource) component;
             UserInstance userInstance = (UserInstance) context.get(UserInstance.class);
             String dropTargetId = dragSource.getDropTarget(propertyIndex);
-            Component dropTarget = (Component) component.getApplicationInstance().getComponentByRenderId(dropTargetId);
+            Component dropTarget = (Component) component.getContainingWindow().getComponentByRenderId(dropTargetId);
             if (dropTarget == null) {
                 return null;
             } else {

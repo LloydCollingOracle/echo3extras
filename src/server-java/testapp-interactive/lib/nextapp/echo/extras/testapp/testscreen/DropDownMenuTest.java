@@ -118,7 +118,7 @@ public class DropDownMenuTest extends AbstractTest {
         testControlsPane.addButton(TestControlPane.CATEGORY_INTEGRATION, "Add Test Window: SplitPane", new ActionListener(){
         
             public void actionPerformed(ActionEvent e) {
-                ContentPane rootContent = getApplicationInstance().getDefaultWindow().getContent();
+                ContentPane rootContent = getContainingWindow().getContent();
                 WindowPane windowPane = new WindowPane();
                 windowPane.setTitle("SplitPane Test Window");
                 windowPane.setStyleName("Default");
@@ -142,7 +142,7 @@ public class DropDownMenuTest extends AbstractTest {
         testControlsPane.addButton(TestControlPane.CATEGORY_INTEGRATION, "Add Test window: Row", new ActionListener(){
         
             public void actionPerformed(ActionEvent e) {
-                ContentPane rootContent = getApplicationInstance().getDefaultWindow().getContent();
+                ContentPane rootContent = getContainingWindow().getContent();
                 WindowPane windowPane = new WindowPane();
                 windowPane.setTitle("Row Test Window");
                 windowPane.setStyleName("Default");

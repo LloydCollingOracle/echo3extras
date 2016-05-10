@@ -112,7 +112,7 @@ public class MenuBarPaneTest extends AbstractTest {
         testControlsPane.addButton(TestControlPane.CATEGORY_INTEGRATION, "Add Test WindowPane", new ActionListener(){
         
             public void actionPerformed(ActionEvent e) {
-                ContentPane rootContent = getApplicationInstance().getDefaultWindow().getContent();
+                ContentPane rootContent = getContainingWindow().getContent();
                 WindowPane windowPane = new WindowPane();
                 windowPane.setTitle("Menu Test Window");
                 windowPane.setStyleName("Default");

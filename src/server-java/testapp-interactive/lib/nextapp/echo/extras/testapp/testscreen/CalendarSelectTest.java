@@ -120,7 +120,7 @@ public class CalendarSelectTest extends AbstractTest {
                 CalendarSelect calendarSelect = new CalendarSelect();
                 calendarSelect.setStyleName("Default");
                 windowPane.add(calendarSelect);
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                testControlsPane.getContainingWindow().getContent().add(windowPane);
             }
         });
         
@@ -143,7 +143,7 @@ public class CalendarSelectTest extends AbstractTest {
                 calendarSelect.setLayoutData(layoutData);
                 calendarSelect.setStyleName("Default");
                 column.add(calendarSelect);
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                testControlsPane.getContainingWindow().getContent().add(windowPane);
             }
         });
         

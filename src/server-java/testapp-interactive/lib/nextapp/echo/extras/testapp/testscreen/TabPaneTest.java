@@ -1024,18 +1024,18 @@ public class TabPaneTest extends AbstractTest {
                     new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     final InteractiveApp app = InteractiveApp.getApp();
-                    final TaskQueueHandle tqh = app.createTaskQueue();
+                    final TaskQueueHandle tqh = testControlsPane.getContainingWindow().createTaskQueue();
                     Thread thread = new Thread() {
                         public void run() {
                             try {
                                 Thread.sleep(3000);
                             } catch (InterruptedException ex) {
                             }
-                            app.enqueueTask(tqh, new Runnable() {
+                            testControlsPane.getContainingWindow().enqueueTask(tqh, new Runnable() {
                             
                                 public void run() {
                                     tabPane.setActiveTabIndex(tabIndex);
-                                    app.removeTaskQueue(tqh);
+                                    testControlsPane.getContainingWindow().removeTaskQueue(tqh);
                                 }
                             });
                         }

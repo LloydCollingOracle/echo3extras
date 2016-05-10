@@ -29,6 +29,8 @@
 
 package nextapp.echo.extras.testapp;
 
+import java.util.Map;
+
 import nextapp.echo.app.ApplicationInstance;
 import nextapp.echo.app.Window;
 
@@ -109,9 +111,9 @@ public class InteractiveApp extends ApplicationInstance {
     public void consoleWrite(String message) {
         if (console == null) {
             console = new ConsoleWindowPane();
-            getDefaultWindow().getContent().add(console);
+            Window.getActive().getContent().add(console);
         } else if (console.getParent() == null) {
-            getDefaultWindow().getContent().add(console);
+            Window.getActive().getContent().add(console);
         }
         if (message != null) {
             console.writeMessage(message);
@@ -141,7 +143,7 @@ public class InteractiveApp extends ApplicationInstance {
      */
     public Window init() {
         setStyleSheet(Styles.DEFAULT_STYLE_SHEET);
-        mainWindow = new Window();
+        mainWindow = new Window(this);
         mainWindow.setTitle("NextApp Echo3 Extras Test Application");
         if (INITIAL_TEST == null) {
             mainWindow.setContent(new WelcomePane());

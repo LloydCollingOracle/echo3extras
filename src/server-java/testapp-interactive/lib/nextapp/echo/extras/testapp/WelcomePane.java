@@ -115,6 +115,6 @@ public class WelcomePane extends ContentPane {
      */
     public void init() {
         super.init();
-        getApplicationInstance().setFocusedComponent(continueButton);
+        getContainingWindow().setFocusedComponent(continueButton);
     }
 }

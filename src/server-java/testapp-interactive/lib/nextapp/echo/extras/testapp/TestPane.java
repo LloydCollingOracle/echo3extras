@@ -40,6 +40,7 @@ import nextapp.echo.app.FillImage;
 import nextapp.echo.app.Insets;
 import nextapp.echo.app.Label;
 import nextapp.echo.app.SplitPane;
+import nextapp.echo.app.Window;
 import nextapp.echo.app.WindowPane;
 import nextapp.echo.app.event.ActionEvent;
 import nextapp.echo.app.event.ActionListener;
@@ -78,7 +79,7 @@ public class TestPane extends ContentPane {
                 modalWindow
                         .add(new Label(
                                 "Verify this modal WindowPane blocks input to all components."));
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(
+                Window.getActive().getContent().add(
                         modalWindow);
             } else if (e.getActionCommand().equals("OpenConsole")) {
                 InteractiveApp.getApp().consoleWrite(null);

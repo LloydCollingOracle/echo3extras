@@ -39,6 +39,7 @@ import nextapp.echo.app.Component;
 import nextapp.echo.app.ContentPane;
 import nextapp.echo.app.Extent;
 import nextapp.echo.app.ResourceImageReference;
+import nextapp.echo.app.Window;
 import nextapp.echo.app.WindowPane;
 import nextapp.echo.app.event.ActionEvent;
 import nextapp.echo.app.event.ActionListener;
@@ -66,13 +67,13 @@ public class RichTextAreaTest extends AbstractTest {
         
         public void operationPerformed(RichTextOperationEvent e) {
             if (RichTextArea.OPERATION_INSERT_HYPERLINK.equals(e.getOperationId())) {
-                getApplicationInstance().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
+                getContainingWindow().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
                         "<a href=\"http://www.nextapp.com\">www.nextapp.com</a>"));
             } else if (RichTextArea.OPERATION_INSERT_IMAGE.equals(e.getOperationId())) {
-                getApplicationInstance().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
+            	getContainingWindow().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
                         "<img src=\"http://www.nextapp.com/home/images/logo.png\"/>"));
             } else if (RichTextArea.OPERATION_INSERT_TABLE.equals(e.getOperationId())) {
-                getApplicationInstance().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
+            	getContainingWindow().enqueueCommand(new InsertHtmlCommand((Component) e.getSource(), 
                         "<table border=\"1\"><tbody><tr><td>Alpha</td><td>Bravo</td></tr></tbody></table>"));
             } 
         }
@@ -87,7 +88,7 @@ public class RichTextAreaTest extends AbstractTest {
         richTextArea = createStyledRTA();
         mainContent.add(richTextArea);
         
-        InteractiveApp.getApp().setFocusedComponent(richTextArea);
+        Window.getActive().setFocusedComponent(richTextArea);
         
         setTestComponent(mainContent, richTextArea);
         
@@ -235,13 +236,13 @@ public class RichTextAreaTest extends AbstractTest {
         
         testControlsPane.addButton(TestControlPane.CATEGORY_COMMANDS, "Insert 'hello'", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                getApplicationInstance().enqueueCommand(new InsertHtmlCommand(richTextArea, "hello"));
+            	getContainingWindow().enqueueCommand(new InsertHtmlCommand(richTextArea, "hello"));
             }
         });
         
         testControlsPane.addButton(TestControlPane.CATEGORY_COMMANDS, "Insert <hr>", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                getApplicationInstance().enqueueCommand(new InsertHtmlCommand(richTextArea, "<hr>"));
+            	getContainingWindow().enqueueCommand(new InsertHtmlCommand(richTextArea, "<hr>"));
             }
         });
         
@@ -335,7 +336,7 @@ public class RichTextAreaTest extends AbstractTest {
                 WindowPane windowPane = new WindowPane("Rich Text Area", new Extent(600), new Extent(600));
                 windowPane.setStyleName("Default");
                 windowPane.add(createStyledRTA());
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                Window.getActive().getContent().add(windowPane);
             }
         });
         testControlsPane.addButton(TestControlPane.CATEGORY_INTEGRATION, "Add Modal RTA WidndowPane", new ActionListener(){
@@ -344,7 +345,7 @@ public class RichTextAreaTest extends AbstractTest {
                 windowPane.setModal(true);
                 windowPane.setStyleName("Default");
                 windowPane.add(createStyledRTA());
-                InteractiveApp.getApp().getDefaultWindow().getContent().add(windowPane);
+                Window.getActive().getContent().add(windowPane);
             }
         });
         testControlsPane.addButton(TestControlPane.CATEGORY_PROPERTIES, "Set Locale Null", new ActionListener() {

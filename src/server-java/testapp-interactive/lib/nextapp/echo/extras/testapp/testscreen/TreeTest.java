@@ -438,7 +438,7 @@ public class TreeTest extends AbstractTest {
         testControlsPane.addButton(TestControlPane.CATEGORY_CONTENT, "Expand all nodes", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (tree.getModel() instanceof EndlessOneNodeTreeModel) {
-                    getApplicationInstance().getDefaultWindow().getContent().add(
+                    getContainingWindow().getContent().add(
                             new MessageDialog("I'm afraid I can't do that Dave.", 
                                     "Expanding all nodes of an endless tree model will certainly result in an infinite loop.", 
                                     MessageDialog.CONTROLS_OK));
