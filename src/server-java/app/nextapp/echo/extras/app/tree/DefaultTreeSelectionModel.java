@@ -62,36 +62,40 @@ public class DefaultTreeSelectionModel implements TreeSelectionModel {
     /**
      * @see nextapp.echo.extras.app.tree.TreeSelectionModel#addSelectionPath(nextapp.echo.extras.app.tree.TreePath)
      */
-    public void addSelectionPath(TreePath path) {
+    public boolean addSelectionPath(TreePath path) {
         if (path == null) {
-            return;
+            return false;
         }
-        addSelectionPaths(new TreePath[] {path});
+        return addSelectionPaths(new TreePath[] {path});
     }
 
     /**
      * @see nextapp.echo.extras.app.tree.TreeSelectionModel#addSelectionPaths(nextapp.echo.extras.app.tree.TreePath[])
      */
-    public void addSelectionPaths(TreePath[] paths) {
+    public boolean addSelectionPaths(TreePath[] paths) {
+    	boolean eventFired = false;
         if (paths == null || paths.length == 0) {
-            return;
+            return eventFired;
         }
         if (SINGLE_SELECTION == getSelectionMode()) {
         	if (paths[0].equals(getSelectionPath())) {
         		// don't change when same selection path is set
-        		return;
+        		return eventFired;
         	}
         	boolean changed = !this.paths.isEmpty();
             this.paths.clear();
             changed |= this.paths.add(paths[0]);
             if (changed) {
             	fireValueChanged();
+            	eventFired = true;
             }
         } else {
             if (this.paths.addAll(Arrays.asList(paths))) {
                 fireValueChanged();
+                eventFired = true;
             }
         }
+        return eventFired;
     }
 
     /**
@@ -223,9 +227,11 @@ public class DefaultTreeSelectionModel implements TreeSelectionModel {
     public void setSelectionPath(TreePath path) {
         boolean wasEmpty = isSelectionEmpty();
         paths.clear();
-        addSelectionPath(path);
-        if (!wasEmpty || !isSelectionEmpty()) {
-            fireValueChanged();
+        boolean alreadyFired = addSelectionPath(path);
+        if (!alreadyFired) {
+	        if (!wasEmpty || !isSelectionEmpty()) {
+	            fireValueChanged();
+	        }
         }
     }
 
@@ -235,9 +241,11 @@ public class DefaultTreeSelectionModel implements TreeSelectionModel {
     public void setSelectionPaths(TreePath[] paths) {
         boolean wasEmpty = isSelectionEmpty();
         this.paths.clear();
-        addSelectionPaths(paths);
-        if (!wasEmpty || !isSelectionEmpty()) {
-            fireValueChanged();
+        boolean alreadyFired = addSelectionPaths(paths);
+        if (!alreadyFired) {
+	        if (!wasEmpty || !isSelectionEmpty()) {
+	            fireValueChanged();
+	        }
         }
     }
 

@@ -146,8 +146,9 @@ extends Serializable {
      * <code>path</code> is null.
      * 
      * @param path the new path to add to the current selection
+     * @return true if an event is fired indicating selection change
      */
-    void addSelectionPath(TreePath path);
+    boolean addSelectionPath(TreePath path);
 
     /**
      * Adds paths to the current selection. If any of the paths in paths are not
@@ -155,8 +156,9 @@ extends Serializable {
      * has no effect if <code>paths</code> is null.
      * 
      * @param paths the new paths to add to the current selection
+     * @return true if an event is fired indicating selection change
      */
-    void addSelectionPaths(TreePath[] paths);
+    boolean addSelectionPaths(TreePath[] paths);
 
     /**
      * Removes path from the selection. If path is in the selection The
