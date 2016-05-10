@@ -56,6 +56,7 @@ public class TreeNodeModel extends AbstractTreeModel implements TreeModelListene
             this.columnKeys = columnKeys;
         else
             compileColumns();
+        addListenersToTree(root);
     }
     
     /**

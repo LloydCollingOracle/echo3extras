@@ -37,6 +37,14 @@ public abstract class AbstractTreeNode implements TreeNode {
         return children;
     }
     
+    private TreeNode[] getChildren(TreeNode parent, int[] childIndices) {
+        TreeNode[] children = new TreeNode[childIndices.length];
+        for (int i = 0; i < children.length; i++) {
+            children[i] = parent.getChild(childIndices[i]);
+        }
+        return children;
+    }
+    
     /**
      * Notifies all listeners that have registered interest for notification on
      * this event type. The event instance is lazily created using the
@@ -56,7 +64,7 @@ public abstract class AbstractTreeNode implements TreeNode {
         for (int i = 0; i < listeners.length; ++i) {
             // Lazily create the event:
             if (e == null) {
-                e = new TreeModelEvent(parent, getPathToRoot(parent), childIndices, getChildren(childIndices));
+                e = new TreeModelEvent(parent, getPathToRoot(parent), childIndices, getChildren(parent, childIndices));
             }
             ((TreeModelListener) listeners[i]).treeNodesChanged(e);
         }
@@ -97,14 +105,14 @@ public abstract class AbstractTreeNode implements TreeNode {
      * @param children the removed elements
      * @see EventListenerList
      */
-    protected void fireTreeNodesRemoved(int[] childIndices) {
+    protected void fireTreeNodesRemoved(int[] childIndices, TreeNode[] children) {
         // Guaranteed to return a non-null array
         Object[] listeners = listenerList.getListeners(TreeModelListener.class);
         TreeModelEvent e = null;
         for (int i = 0; i < listeners.length; i++) {
             // Lazily create the event:
             if (e == null) {
-                e = new TreeModelEvent(this, getPathToRoot(this), childIndices, getChildren(childIndices));
+                e = new TreeModelEvent(this, getPathToRoot(this), childIndices, children);
             }
             ((TreeModelListener) listeners[i]).treeNodesRemoved(e);
         }

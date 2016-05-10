@@ -170,12 +170,12 @@ public class DefaultMutableTreeNode extends AbstractTreeNode {
         for (int i = 0; i < children.length; i++) {
             children[i] = i;
         }
-        Object[] childNodes = this.children.toArray(); 
+        TreeNode[] childNodes = (TreeNode[])this.children.toArray(new TreeNode[this.children.size()]); 
         this.children.removeAllElements();
         for (int i = 0; i < childNodes.length; i++) {
             ((TreeNode)childNodes[i]).setParent(null);
         }
-        fireTreeNodesRemoved(children);
+        fireTreeNodesRemoved(children, childNodes);
     }
 
     /**
@@ -188,7 +188,7 @@ public class DefaultMutableTreeNode extends AbstractTreeNode {
             return;
         children.remove(node);
         node.setParent(null);
-        fireTreeNodesRemoved(new int[] {index});
+        fireTreeNodesRemoved(new int[] {index}, new TreeNode[] {node});
     }
 
     /**
