@@ -13,3 +13,5 @@ custom-ant.properties
 .idea/inspectionProfiles
 tmp
 bin
+.classpath
+.project

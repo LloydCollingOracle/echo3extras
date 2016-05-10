@@ -451,7 +451,10 @@ extends AbstractComponentSynchronizePeer {
         TreePath[] paths = selectionModel.getSelectionPaths();
         for (int i = 0; i < paths.length; i++) {
             TreePath path = paths[i];
-            Component component = tree.getComponent(path, 0);
+            Component component = null;
+            if (pathIsVisible(path, tree)) {
+                component = tree.getComponent(path, 0);
+            }
             if (component == null) {
                 if (renderState != null) {
                     renderState.addUnsentSelection(path);
@@ -469,6 +472,23 @@ extends AbstractComponentSynchronizePeer {
         }
         return selection.toString();
     }
+    
+	/**
+	 * This method determines if the given path is currently visible to the user
+	 * @param path
+	 * @return
+	 */
+	private static boolean pathIsVisible(TreePath path, Tree tree) {    	
+	    // root node is always visible
+	    if (path.getPathCount() == 1)
+	        return true;
+	    
+	    if (tree.isExpanded(path.getParentPath())) {
+	        return pathIsVisible(path.getParentPath(), tree);
+	    } else {
+	        return false;
+	    }
+	}
 
     private static final String PROPERTY_TREE_STRUCTURE = "treeStructure";
     private static final String PROPERTY_COLUMN_COUNT = "columnCount";

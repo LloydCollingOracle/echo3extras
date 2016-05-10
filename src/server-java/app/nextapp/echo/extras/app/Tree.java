@@ -1201,7 +1201,11 @@ public class Tree extends Component {
             return (Component) treePathToComponentCache.get(path);
         } else {
             List list = (List) treePathToComponentCache.get(path);
-            return (Component) list.get(column);
+            if (list != null) {
+	            return (Component) list.get(column);
+            } else {
+	            throw new IllegalStateException("Components have not been rendered for path " + path);
+            }
         }
     }
     
@@ -1261,7 +1265,7 @@ public class Tree extends Component {
     /**
      * Marks the tree as needing to be re-rendered.
      */
-    private void invalidate() {
+    protected void invalidate() {
         valid = false;
     }
     
