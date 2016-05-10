@@ -79,15 +79,15 @@ import nextapp.echo.extras.app.tree.TreeSelectionModel;
  */
 public class Tree extends Component {
 
-    private class Renderer 
+    protected class Renderer 
     implements Serializable {
 
         private int columnCount;
-        private int row;
+        protected int row;
         private TreeColumn[] treeColumns;
         private TreeCellRenderer[] columnRenderers;
 
-        private void doRender() {
+        protected void doRender() {
             Object root = model.getRoot();
             if (isHeaderVisible()) {
                 renderHeader();
@@ -95,7 +95,7 @@ public class Tree extends Component {
             doRenderNode(new TreePath(root));
         }
         
-        private void init() {
+        protected void init() {
             columnCount = columnModel.getColumnCount();
             
             treeColumns = new TreeColumn[columnCount];
@@ -119,7 +119,7 @@ public class Tree extends Component {
             }
         }
         
-        private void renderHeader() {
+        protected void renderHeader() {
             for (int columnIndex = 0; columnIndex < columnCount; ++columnIndex) {
                 int modelColumnIndex = treeColumns[columnIndex].getModelIndex();
                 Object headerValue = treeColumns[columnIndex].getHeaderValue();
@@ -143,7 +143,7 @@ public class Tree extends Component {
             }
         }
 
-        private void doRenderNode(TreePath treePath) {
+        protected void doRenderNode(TreePath treePath) {
             Object value = treePath.getLastPathComponent();
             if (!treePathToComponentCache.containsKey(treePath)) {
                 renderNodeComponents(treePath);
@@ -163,7 +163,7 @@ public class Tree extends Component {
             }
         }
         
-        private void renderNodeComponents(TreePath treePath) {
+        protected void renderNodeComponents(TreePath treePath) {
             Object node = treePath.getLastPathComponent();
             
             boolean leaf = model.getChildCount(node) == 0;
@@ -180,7 +180,7 @@ public class Tree extends Component {
             }
         }
         
-        private void cacheComponent(TreePath treePath, int column, Component component) {
+        protected void cacheComponent(TreePath treePath, int column, Component component) {
             if (1 == columnCount) {
                 treePathToComponentCache.put(treePath, component);
             } else {
@@ -195,7 +195,7 @@ public class Tree extends Component {
             }
         }
 
-        void update(TreePath path, boolean newState) {
+        protected void update(TreePath path, boolean newState) {
             init();
             row = getRowForPath(path);
             if (row == -1) {
@@ -208,7 +208,7 @@ public class Tree extends Component {
             }
         }
 
-        private void doCollapse(TreePath path) {
+        protected void doCollapse(TreePath path) {
             Object value = path.getLastPathComponent();
 
             if (model.getChildCount(value) == 0) {
@@ -230,7 +230,7 @@ public class Tree extends Component {
             }
         }
 
-        private TreePath getSiblingPath(TreePath path) {
+        protected TreePath getSiblingPath(TreePath path) {
             TreePath parentPath = path.getParentPath();
             if (parentPath == null) {
                 return null;
@@ -246,7 +246,7 @@ public class Tree extends Component {
             }
         }
 
-        void fullUpdate() {
+        protected void fullUpdate() {
             init();
             removeAll();
             treePathToComponentCache.clear();
@@ -256,7 +256,7 @@ public class Tree extends Component {
         }
     }
 
-    private Renderer renderer = new Renderer();
+    private Renderer renderer = createRenderer();
 
     public static final String PROPERTY_ACTION_COMMAND = "actionCommand";
     public static final String PROPERTY_BORDER = "border";
@@ -429,8 +429,8 @@ public class Tree extends Component {
     private Map defaultRendererMap = new HashMap();
     private TreeCellRenderer defaultHeaderRenderer;
     private Set expandedPaths = new HashSet();
-    private List rowToTreePathCache = new ArrayList();
-    private Map treePathToComponentCache = new HashMap();
+    protected List rowToTreePathCache = new ArrayList();
+    protected Map treePathToComponentCache = new HashMap();
     private boolean valid = false;
     private TreeCellRenderer cellRenderer;
     private boolean autoCreateColumnsFromModel;
@@ -473,7 +473,11 @@ public class Tree extends Component {
         });
     }
     
-    /**
+    protected Renderer createRenderer() {
+		return new Renderer();
+	}
+
+	/**
      * Constructs a new <code>Tree</code> with the specified model.
      * <p>
      * If the model has a root node, it will be expanded by default.
