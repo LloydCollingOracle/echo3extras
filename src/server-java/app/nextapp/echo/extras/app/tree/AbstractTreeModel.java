@@ -29,6 +29,8 @@
 
 package nextapp.echo.extras.app.tree;
 
+import java.io.Serializable;
+
 import nextapp.echo.app.event.EventListenerList;
 import nextapp.echo.extras.app.event.TreeModelEvent;
 import nextapp.echo.extras.app.event.TreeModelListener;

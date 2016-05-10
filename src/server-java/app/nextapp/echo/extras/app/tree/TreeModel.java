@@ -52,7 +52,7 @@ public interface TreeModel extends Serializable {
      * @param index the child index
      * @return the child node
      */
-    public Object getChild(Object parent, int index);
+    public Serializable getChild(Serializable parent, int index);
 
     /**
      * Returns the number of child nodes in the specified parent.
@@ -60,7 +60,7 @@ public interface TreeModel extends Serializable {
      * @param parent the parent node
      * @return the number of child nodes
      */
-    public int getChildCount(Object parent);
+    public int getChildCount(Serializable parent);
     
     /**
      * Returns the type for the specified column index.
@@ -91,14 +91,14 @@ public interface TreeModel extends Serializable {
      * @param parent the parent node
      * @param child the child node
      */
-    public int getIndexOfChild(Object parent, Object child);
+    public int getIndexOfChild(Serializable parent, Serializable child);
     
     /**
      * Returns the root node of the tree.
      * 
      * @return the root node object
      */
-    public Object getRoot();
+    public Serializable getRoot();
 
     /**
      * Returns the value to be displayed for node <code>node</code>, 
@@ -107,7 +107,7 @@ public interface TreeModel extends Serializable {
      * @param columnIndex the column index
      * @return the column value
      */
-    public Object getValueAt(Object node, int columnIndex);
+    public Serializable getValueAt(Serializable node, int columnIndex);
 
     /**
      * Determines whether the specified node is a leaf.  A leaf may not have children,
@@ -116,7 +116,7 @@ public interface TreeModel extends Serializable {
      * @param object the node object
      * @return true if the node object is a leaf
      */
-    public boolean isLeaf(Object object);
+    public boolean isLeaf(Serializable object);
 
     /**
      * Removes a <code>TreeModelListener</code> from receiving notification of events.

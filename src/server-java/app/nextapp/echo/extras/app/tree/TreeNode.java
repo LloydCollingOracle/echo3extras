@@ -1,5 +1,6 @@
 package nextapp.echo.extras.app.tree;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import nextapp.echo.extras.app.event.TreeModelListener;
@@ -10,7 +11,7 @@ import nextapp.echo.extras.app.event.TreeModelListener;
  *
  * @author Lloyd Colling
  */
-public interface TreeNode {
+public interface TreeNode extends Serializable {
 
     /**
      * How many children the node has

@@ -29,6 +29,7 @@
 
 package nextapp.echo.extras.testapp.testscreen;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import nextapp.echo.app.Component;
@@ -92,11 +93,11 @@ public class TreeTest extends AbstractTest {
     
     static class EndlessOneNodeTreeModel extends AbstractTreeModel {
     
-        public Object getChild(Object parent, int index) {
+        public Serializable getChild(Serializable parent, int index) {
             return new Integer(((Integer)parent).intValue() + 1);
         }
 
-        public int getChildCount(Object parent) {
+        public int getChildCount(Serializable parent) {
             return 1;
         }
 
@@ -104,19 +105,19 @@ public class TreeTest extends AbstractTest {
             return 1;
         }
 
-        public int getIndexOfChild(Object parent, Object child) {
+        public int getIndexOfChild(Serializable parent, Serializable child) {
             return 0;
         }
 
-        public Object getRoot() {
+        public Serializable getRoot() {
             return new Integer(0);
         }
 
-        public Object getValueAt(Object node, int column) {
+        public Serializable getValueAt(Serializable node, int column) {
             return node;
         }
 
-        public boolean isLeaf(Object object) {
+        public boolean isLeaf(Serializable object) {
             return false;
         }
     }
@@ -124,14 +125,14 @@ public class TreeTest extends AbstractTest {
     private static TreeModel generateTenLevelsOneNodeTreeModel() {
         return new AbstractTreeModel() {
             
-            public Object getChild(Object parent, int index) {
+            public Serializable getChild(Serializable parent, int index) {
                 if (((Integer)parent).intValue() >= 10) {
                     return null;
                 }
                 return new Integer(((Integer)parent).intValue() + 1);
             }
             
-            public int getChildCount(Object parent) {
+            public int getChildCount(Serializable parent) {
                 if (((Integer)parent).intValue() >= 10) {
                     return 0;
                 }
@@ -142,19 +143,19 @@ public class TreeTest extends AbstractTest {
                 return 1;
             }
             
-            public int getIndexOfChild(Object parent, Object child) {
+            public int getIndexOfChild(Serializable parent, Serializable child) {
                 return 0;
             }
             
-            public Object getRoot() {
+            public Serializable getRoot() {
                 return new Integer(0);
             }
             
-            public Object getValueAt(Object node, int column) {
+            public Serializable getValueAt(Serializable node, int column) {
                 return node;
             }
             
-            public boolean isLeaf(Object object) {
+            public boolean isLeaf(Serializable object) {
                 return false;
             }
         };
@@ -163,11 +164,11 @@ public class TreeTest extends AbstractTest {
     private static TreeModel generateSimpleTreeTableModel() {
         return new AbstractTreeModel() {
 
-            public Object getChild(Object parent, int index) {
+            public Serializable getChild(Serializable parent, int index) {
                 return new Integer(index);
             }
 
-            public int getChildCount(Object parent) {
+            public int getChildCount(Serializable parent) {
                 int parentValue = ((Integer) parent).intValue();
                 return parentValue;
             }
@@ -176,23 +177,23 @@ public class TreeTest extends AbstractTest {
                 return 5;
             }
             
-            public Object getValueAt(Object node, int column) {
+            public Serializable getValueAt(Serializable node, int column) {
                 if (0 == column) {
                     return node;
                 }
                 return ((Integer) node).intValue() + " - " + column;
             }
 
-            public int getIndexOfChild(Object parent, Object child) {
+            public int getIndexOfChild(Serializable parent, Serializable child) {
                 int childValue = ((Integer) child).intValue();
                 return childValue;
             }
 
-            public Object getRoot() {
+            public Serializable getRoot() {
                 return new Integer(4);
             }
 
-            public boolean isLeaf(Object object) {
+            public boolean isLeaf(Serializable object) {
                 int objectValue = ((Integer) object).intValue();
                 return objectValue == 0;
             }
@@ -202,11 +203,11 @@ public class TreeTest extends AbstractTest {
     private static TreeModel generateSimpleTreeTableModelWithLongNodeValues() {
         return new AbstractTreeModel() {
             
-            public Object getChild(Object parent, int index) {
+            public Serializable getChild(Serializable parent, int index) {
                 return new Integer(index);
             }
             
-            public int getChildCount(Object parent) {
+            public int getChildCount(Serializable parent) {
                 int parentValue = ((Integer) parent).intValue();
                 return parentValue;
             }
@@ -215,23 +216,23 @@ public class TreeTest extends AbstractTest {
                 return 5;
             }
             
-            public Object getValueAt(Object node, int column) {
+            public Serializable getValueAt(Serializable node, int column) {
                 if (0 == column) {
                     return node + " - Lorem ipsum dolor sit amet, consectetuer adipiscing elit.";
                 }
                 return ((Integer) node).intValue() + " - " + column;
             }
             
-            public int getIndexOfChild(Object parent, Object child) {
+            public int getIndexOfChild(Serializable parent, Serializable child) {
                 int childValue = ((Integer) child).intValue();
                 return childValue;
             }
             
-            public Object getRoot() {
+            public Serializable getRoot() {
                 return new Integer(4);
             }
             
-            public boolean isLeaf(Object object) {
+            public boolean isLeaf(Serializable object) {
                 int objectValue = ((Integer) object).intValue();
                 return objectValue == 0;
             }

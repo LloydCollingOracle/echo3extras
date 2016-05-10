@@ -1,5 +1,6 @@
 package nextapp.echo.extras.webcontainer.sync.component.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -132,7 +133,7 @@ public class TreeRenderState implements RenderState {
             }
             
             private int compareNodes(int index, TreePath path1, TreePath path2) {
-                Object commonParent = path1.getPathComponent(index - 1);
+            	Serializable commonParent = path1.getPathComponent(index - 1);
                 int index1 = tree.getModel().getIndexOfChild(commonParent, path1.getPathComponent(index));
                 int index2 = tree.getModel().getIndexOfChild(commonParent, path2.getPathComponent(index));
                 if (index1 < index2) {

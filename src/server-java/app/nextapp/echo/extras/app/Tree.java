@@ -88,7 +88,7 @@ public class Tree extends Component {
         private TreeCellRenderer[] columnRenderers;
 
         protected void doRender() {
-            Object root = model.getRoot();
+        	Serializable root = model.getRoot();
             if (isHeaderVisible()) {
                 renderHeader();
             }
@@ -144,7 +144,7 @@ public class Tree extends Component {
         }
 
         protected void doRenderNode(TreePath treePath) {
-            Object value = treePath.getLastPathComponent();
+        	Serializable value = treePath.getLastPathComponent();
             if (!treePathToComponentCache.containsKey(treePath)) {
                 renderNodeComponents(treePath);
             }
@@ -157,14 +157,14 @@ public class Tree extends Component {
             if (isExpanded(treePath)) {
                 int childCount = model.getChildCount(value);
                 for (int i = 0; i < childCount; ++i) {
-                    Object childValue = model.getChild(value, i);
+                	Serializable childValue = model.getChild(value, i);
                     doRenderNode(treePath.pathByAddingChild(childValue));
                 }
             }
         }
         
         protected void renderNodeComponents(TreePath treePath) {
-            Object node = treePath.getLastPathComponent();
+        	Serializable node = treePath.getLastPathComponent();
             
             boolean leaf = model.getChildCount(node) == 0;
             for (int i = 0; i < columnCount; ++i) {
@@ -209,7 +209,7 @@ public class Tree extends Component {
         }
 
         protected void doCollapse(TreePath path) {
-            Object value = path.getLastPathComponent();
+        	Serializable value = path.getLastPathComponent();
 
             if (model.getChildCount(value) == 0) {
                 return;
@@ -235,13 +235,13 @@ public class Tree extends Component {
             if (parentPath == null) {
                 return null;
             }
-            Object parentValue = parentPath.getLastPathComponent();
+            Serializable parentValue = parentPath.getLastPathComponent();
             int index = model.getIndexOfChild(parentValue, path
                     .getLastPathComponent());
             if (index == model.getChildCount(parentValue) - 1) {
                 return getSiblingPath(parentPath);
             } else {
-                Object siblingValue = model.getChild(parentValue, index + 1);
+            	Serializable siblingValue = model.getChild(parentValue, index + 1);
                 return parentPath.pathByAddingChild(siblingValue);
             }
         }
@@ -317,6 +317,7 @@ public class Tree extends Component {
          *          nextapp.echo.extras.app.event.TreeModelEvent)
          */
         public void treeStructureChanged(TreeModelEvent e) {
+            firePropertyChange(MODEL_CHANGED_PROPERTY, null, getModel());
             invalidate();
             if (isAutoCreateColumnsFromModel()) {
                 createDefaultColumnsFromModel();
@@ -328,6 +329,7 @@ public class Tree extends Component {
          *          nextapp.echo.extras.app.event.TreeModelEvent)
          */
         public void treeNodesRemoved(TreeModelEvent e) {
+            firePropertyChange(MODEL_CHANGED_PROPERTY, null, getModel());
             invalidate();
             TreePath removedPath = e.getTreePath();
             TreePath[] selectionPaths = getSelectionModel().getSelectionPaths();
@@ -347,6 +349,7 @@ public class Tree extends Component {
          *          nextapp.echo.extras.app.event.TreeModelEvent)
          */
         public void treeNodesChanged(TreeModelEvent e) {
+            firePropertyChange(MODEL_CHANGED_PROPERTY, null, getModel());
             invalidate();
             if (isAutoCreateColumnsFromModel()) {
                 createDefaultColumnsFromModel();
@@ -358,6 +361,7 @@ public class Tree extends Component {
          *          nextapp.echo.extras.app.event.TreeModelEvent)
          */
         public void treeNodesAdded(TreeModelEvent e) {
+            firePropertyChange(MODEL_CHANGED_PROPERTY, null, getModel());
             invalidate();
             if (isAutoCreateColumnsFromModel()) {
                 createDefaultColumnsFromModel();
@@ -443,19 +447,19 @@ public class Tree extends Component {
         
         this(new AbstractTreeModel() {
         
-            public boolean isLeaf(Object object) {
+            public boolean isLeaf(Serializable object) {
                 return true;
             }
         
-            public Object getValueAt(Object node, int column) {
+            public Serializable getValueAt(Serializable node, int column) {
                 return node;
             }
         
-            public Object getRoot() {
+            public Serializable getRoot() {
                 return "";
             }
         
-            public int getIndexOfChild(Object parent, Object child) {
+            public int getIndexOfChild(Serializable parent, Serializable child) {
                 return 0;
             }
         
@@ -463,11 +467,11 @@ public class Tree extends Component {
                 return 1;
             }
         
-            public int getChildCount(Object parent) {
+            public int getChildCount(Serializable parent) {
                 return 0;
             }
         
-            public Object getChild(Object parent, int index) {
+            public Serializable getChild(Serializable parent, int index) {
                 return null;
             }
         });
@@ -593,7 +597,7 @@ public class Tree extends Component {
      * Expand all nodes in the tree.
      */
     public void expandAll() {
-        Object root = model.getRoot();
+    	Serializable root = model.getRoot();
         if (root == null) {
             return;
         }
@@ -608,7 +612,7 @@ public class Tree extends Component {
      */
     protected void expandAll(TreePath path) {
         setExpandedState(path, true);
-        Object value = path.getLastPathComponent();
+        Serializable value = path.getLastPathComponent();
         int childCount = model.getChildCount(value);
         for (int i = 0; i < childCount; ++i) {
             expandAll(path.pathByAddingChild(model.getChild(value, i)));

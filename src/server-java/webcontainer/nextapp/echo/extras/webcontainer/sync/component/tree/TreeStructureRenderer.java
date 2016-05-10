@@ -1,5 +1,6 @@
 package nextapp.echo.extras.webcontainer.sync.component.tree;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class TreeStructureRenderer {
                 // header
                 renderNode(context, null, null, false);
             }
-            Object value = model.getRoot();
+            Serializable value = model.getRoot();
             renderNode(context, value, new TreePath(value), true);
             renderState.setFullRender(false);
             propertyElement.setAttribute("fr", "1");
@@ -55,7 +56,7 @@ public class TreeStructureRenderer {
         }
     }
     
-    protected void renderNode(Context context, Object value, TreePath path, boolean root) {
+    protected void renderNode(Context context, Serializable value, TreePath path, boolean root) {
         if (renderedPaths.contains(path)) {
             return;
         }
@@ -78,7 +79,7 @@ public class TreeStructureRenderer {
         if (expanded) {
             int childCount = model.getChildCount(value);
             for (int i = 0; i < childCount; ++i) {
-                Object childValue = model.getChild(value, i);
+            	Serializable childValue = model.getChild(value, i);
                 renderNode(context, childValue, path.pathByAddingChild(childValue), false);
             }
         }
@@ -87,7 +88,7 @@ public class TreeStructureRenderer {
         }
     }
     
-    protected Element doRenderNode(TreePath path, Component component, Context context, Object value, boolean root) {
+    protected Element doRenderNode(TreePath path, Component component, Context context, Serializable value, boolean root) {
         
         UserInstance userInstance = (UserInstance) context.get(UserInstance.class);
         

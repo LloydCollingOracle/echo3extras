@@ -1,5 +1,6 @@
 package nextapp.echo.extras.app.tree;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -113,14 +114,14 @@ public class TreeNodeModel extends AbstractTreeModel implements TreeModelListene
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.getChild(Object, int)
      */
-    public Object getChild(Object parent, int index) {
+    public Serializable getChild(Serializable parent, int index) {
         return ((TreeNode)parent).getChild(index);
     }
 
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.getChildCount(Object)
      */
-    public int getChildCount(Object parent) {
+    public int getChildCount(Serializable parent) {
         return ((TreeNode)parent).getChildCount();
     }
 
@@ -134,28 +135,28 @@ public class TreeNodeModel extends AbstractTreeModel implements TreeModelListene
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.getIndexOfChild(Object, Object)
      */
-    public int getIndexOfChild(Object parent, Object child) {
+    public int getIndexOfChild(Serializable parent, Serializable child) {
         return ((TreeNode)parent).getIndexOf((TreeNode)child);
     }
 
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.getRoot()
      */
-    public Object getRoot() {
+    public Serializable getRoot() {
         return root;
     }
 
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.getValueAt(Object, int)
      */
-    public Object getValueAt(Object node, int column) {
-        return ((TreeNode)node).getColumnValues().get(columnKeys[column]);
+    public Serializable getValueAt(Serializable node, int column) {
+        return (Serializable)((TreeNode)node).getColumnValues().get(columnKeys[column]);
     }
 
     /**
      * @see nextapp.echo.extras.app.tree.TreeModel.isLeaf(Object)
      */
-    public boolean isLeaf(Object object) {
+    public boolean isLeaf(Serializable object) {
         return ((TreeNode)object).isLeaf();
     }
 

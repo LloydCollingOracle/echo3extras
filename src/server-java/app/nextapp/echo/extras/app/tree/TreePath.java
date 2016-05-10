@@ -46,7 +46,7 @@ implements Serializable {
     private TreePath parentPath;
 
     /** Last path component. */
-    private Object lastPathComponent;
+    private Serializable lastPathComponent;
 
     /**
      * Constructs a path from an array of Objects, uniquely identifying the path
@@ -61,7 +61,7 @@ implements Serializable {
      * @param path
      *            an array of Objects representing the path to a node
      */
-    public TreePath(Object[] path) {
+    public TreePath(Serializable[] path) {
         if (path == null || path.length == 0) {
             throw new IllegalArgumentException("path in TreePath must be non null and not empty.");
         }
@@ -80,7 +80,7 @@ implements Serializable {
      *            an Object representing the path to a node
      * @see #TreePath(Object[])
      */
-    public TreePath(Object singlePath) {
+    public TreePath(Serializable singlePath) {
         if (singlePath == null) {
             throw new IllegalArgumentException("path in TreePath must be non null.");
         }
@@ -92,7 +92,7 @@ implements Serializable {
      * Constructs a new TreePath, which is the path identified by
      * <code>parent</code> ending in <code>lastElement</code>.
      */
-    protected TreePath(TreePath parent, Object lastElement) {
+    protected TreePath(TreePath parent, Serializable lastElement) {
         if (lastElement == null) {
             throw new IllegalArgumentException("path in TreePath must be non null.");
         }
@@ -104,7 +104,7 @@ implements Serializable {
      * Constructs a new TreePath with the identified path components of length
      * <code>length</code>.
      */
-    protected TreePath(Object[] path, int length) {
+    protected TreePath(Serializable[] path, int length) {
         lastPathComponent = path[length - 1];
         if (length > 1) {
             parentPath = new TreePath(path, length - 1);
@@ -128,9 +128,9 @@ implements Serializable {
      * @return an array of Objects representing the TreePath
      * @see #TreePath(Object[])
      */
-    public Object[] getPath() {
+    public Serializable[] getPath() {
         int i = getPathCount();
-        Object[] result = new Object[i--];
+        Serializable[] result = new Serializable[i--];
 
         for (TreePath path = this; path != null; path = path.parentPath) {
             result[i--] = path.lastPathComponent;
@@ -145,7 +145,7 @@ implements Serializable {
      * @return the Object at the end of the path
      * @see #TreePath(Object[])
      */
-    public Object getLastPathComponent() {
+    public Serializable getLastPathComponent() {
         return lastPathComponent;
     }
 
@@ -173,7 +173,7 @@ implements Serializable {
      *             if the index is beyond the length of the path
      * @see #TreePath(Object[])
      */
-    public Object getPathComponent(int element) {
+    public Serializable getPathComponent(int element) {
         int pathLength = getPathCount();
 
         if (element < 0 || element >= pathLength) {
@@ -267,7 +267,7 @@ implements Serializable {
      * the newly created TreePath. This will throw a NullPointerException if
      * child is null.
      */
-    public TreePath pathByAddingChild(Object child) {
+    public TreePath pathByAddingChild(Serializable child) {
         if (child == null) {
             throw new NullPointerException("Null child not allowed");
         }
